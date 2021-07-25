@@ -7,7 +7,7 @@ import { KubernetesDeployManifestTypes, KubernetesDeployBuildMethods, Kubernetes
 import { buildOption } from '@/portainer/components/box-selector';
 class KubernetesDeployController {
   /* @ngInject */
-  constructor($async, $state, $window, Authentication, CustomTemplateService, ModalService, Notifications, EndpointProvider, KubernetesResourcePoolService, StackService) {
+  constructor($async, $state, $window, Authentication, CustomTemplateService, ModalService, Notifications, KubernetesResourcePoolService, StackService) {
     this.$async = $async;
     this.$state = $state;
     this.$window = $window;
@@ -15,7 +15,6 @@ class KubernetesDeployController {
     this.CustomTemplateService = CustomTemplateService;
     this.ModalService = ModalService;
     this.Notifications = Notifications;
-    this.EndpointProvider = EndpointProvider;
     this.KubernetesResourcePoolService = KubernetesResourcePoolService;
     this.StackService = StackService;
 
@@ -44,7 +43,6 @@ class KubernetesDeployController {
     this.formValues = {};
     this.ManifestDeployTypes = KubernetesDeployManifestTypes;
     this.BuildMethods = KubernetesDeployBuildMethods;
-    this.endpointId = this.EndpointProvider.endpointID();
 
     this.onChangeTemplateId = this.onChangeTemplateId.bind(this);
     this.deployAsync = this.deployAsync.bind(this);
@@ -199,7 +197,7 @@ class KubernetesDeployController {
         payload.ManifestURL = this.formValues.ManifestURL;
       }
 
-      await this.StackService.kubernetesDeploy(this.endpointId, method, payload);
+      await this.StackService.kubernetesDeploy(this.endpoint.Id, method, payload);
 
       this.Notifications.success('Manifest successfully deployed');
       this.state.isEditorDirty = false;
