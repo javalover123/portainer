@@ -1034,6 +1034,10 @@ class KubernetesCreateApplicationController {
       }
     });
   }
+
+  isEditingExternalApp() {
+    return this.state.isEdit && KubernetesApplicationHelper.isExternalApplication(this.application);
+  }
   /* #endregion */
 
   /* #region  ON INIT */
